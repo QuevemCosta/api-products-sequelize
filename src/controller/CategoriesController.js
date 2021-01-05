@@ -16,12 +16,16 @@ module.exports = {
 	},
 
 	async create(request, response){
-		const {name} = request.body;
+		try{
+			const {name} = request.body;
 
-		 const category = await Categories.create({name})
- 
+			 const category = await Categories.create({name})
+	 
 
-		return response.json({category});
+			return response.status(200).send(category);
+		}catch(err){
+			return response.status(400).send({error:err})
+		}
 	}
 
 }

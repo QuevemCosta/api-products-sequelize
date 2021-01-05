@@ -16,10 +16,15 @@ module.exports = {
     },
 
     async create(request, response){
-       const {name, description,categoryId, cashValue,termValue,image} = request.body
+      try{
+        const {name, description,categoryId, cashValue,termValue,image} = request.body
 
-       const product = await Products.create({name, description, categoryId, cashValue, termValue, image})
+        const product = await Products.create({name, description, categoryId, cashValue, termValue, image})
  
-        return response.json(product);
+        return response.status(200).send(product);
+
+      }catch(err){
+        return response.status(400).send({error:err})
+      }
     }
 }
