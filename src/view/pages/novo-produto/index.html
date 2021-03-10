@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;600&display=swap" rel="stylesheet"> 
+	<style type="text/css">
+		*{
+			bodx-sizing:boder-box;
+			padding: 0;
+			margin: 0;
+			font-family: 'Titillium Web', sans-serif;
+			font-size: 16px;
+		}
+		h1,h2,h3{
+			font-size: 35px;
+		}
+		ul{
+			display: flex;
+			justify-content: space-around;
+		}
+		li{
+			display:inline-flex;
+			list-style: none;
+		}
+		a{
+			color: blue;
+			text-decoration: none;
+		}
+		a:hover{
+			text-decoration: underline;
+		}
+		form{
+			width: 350px;
+			padding: 15px;
+			border: 1px solid red;
+		}
+		form input,
+		form label, 
+		form textarea, 
+		form select,
+		form button{
+			width: 100%;
+			margin: 5px 0;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Deash</h1>
+		<nav>
+			<ul>
+				<li><a href="/">Inicio</a></li>
+				<li><a href="/novo/produto">+Produto</a></li>
+				<li><a href="/nova/categoria">+Categoria</a></li>
+				
+			</ul>
+		</nav>
+	</header>
+
+	<section>
+		<h2>Novo Produto</h2>
+		<form autocomplete="off" onsubmit="submit()">
+			<label for="name" >Nome</label>
+			<input type="text" name="name" id="name" placeholder="name">
+
+			<label for="description" >Descrição</label>
+			<textarea name="description" id="description" cols="35" rows="5" placeholder="Escreva alguns detales sobre o produto" ></textarea>
+
+			<label for="categoryId" >Categoria</label>
+			<select name="categoryId" id="categoryId">
+				<option>---Escolha uma opção---</option>
+			</select>
+
+			<label for="cashValue" >A vista</label>
+			<input type="text" name="cashValue" id="cashValue">
+
+			<label for="termValue" >Parcelado</label>
+			<input type="text" name="termValue" id="termValue">
+
+			<label for="image" ></label>
+			<input type="file" name="image" id="image">
+
+			<button type="submit">Salvar</button>
+			<a href="/" >Cancelar</a>
+		</form>
+	</section>
+
+	<script type="text/javascript">
+		async function getCategories(url){
+			const response = await fetch(url,{
+			method:'GET',
+			cors:'cors',
+			headers:{
+				'Content-Type':'application/json'
+			}
+
+		})
+			.then(response => response.json())
+			.then(data => console.log(data))
+			return response.json();
+		}
+		getCategories('http://localhost:3000/api/categories')
+	</script>
+
+</body>
+</html>
