@@ -55,5 +55,5 @@ const Product = db.sequelize.define('products',{
     }
 
 });
-
+//Product.sync({force:true})
 module.exports = Product

@@ -2,8 +2,9 @@
 <html>
 <head>
 	<title></title>
+	<!--
 	<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;600&display=swap" rel="stylesheet"> 
+	<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;600&display=swap" rel="stylesheet"> --> 
 	<style type="text/css">
 		*{
 			bodx-sizing:boder-box;
@@ -11,6 +12,7 @@
 			margin: 0;
 			font-family: 'Titillium Web', sans-serif;
 			font-size: 16px;
+			
 		}
 		h1,h2,h3{
 			font-size: 35px;
@@ -58,19 +60,23 @@
 		</nav>
 	</header>
 
-	<section>
+	<siection>
 		<h2>Novo Produto</h2>
-		<form autocomplete="off" onsubmit="submit()">
+		<form autocomplete="off" id='form-product'  >
 			<label for="name" >Nome</label>
-			<input type="text" name="name" id="name" placeholder="name">
+			<input type="text" name="name" id="name" placeholder="Nome">
 
 			<label for="description" >Descrição</label>
 			<textarea name="description" id="description" cols="35" rows="5" placeholder="Escreva alguns detales sobre o produto" ></textarea>
 
-			<label for="categoryId" >Categoria</label>
-			<select name="categoryId" id="categoryId">
-				<option>---Escolha uma opção---</option>
-			</select>
+			<label for="categoryId" >Codigo de Categoria</label>
+			<input list="categories"  name="categoryId" id="categoryId">
+			
+			<datalist id="categories" >
+				<option>Selecione</option>	
+			</datalist>
+
+		
 
 			<label for="cashValue" >A vista</label>
 			<input type="text" name="cashValue" id="cashValue">
@@ -87,20 +93,60 @@
 	</section>
 
 	<script type="text/javascript">
-		async function getCategories(url){
-			const response = await fetch(url,{
-			method:'GET',
-			cors:'cors',
-			headers:{
-				'Content-Type':'application/json'
+
+		//validar imagem,cash value e term value
+
+		const formProduct = document.getElementById('form-product')
+
+		function loadCategories(response){
+
+			for(i=0;i<response.length;i++){
+
+				let valueContent = document.createTextNode(response[i].id)
+				let nameContent = document.createTextNode(`${valueContent.data}-${response[i].name}`)
+
+
+				let optionEle = document.createElement('option')
+
+				optionEle.setAttribute('value',valueContent.data)
+				optionEle.appendChild(nameContent)
+
+				document.getElementById('categories').appendChild(optionEle)
+
+
+
 			}
 
-		})
-			.then(response => response.json())
-			.then(data => console.log(data))
-			return response.json();
 		}
+		async function getCategories(url){
+			const response = await fetch(url,{
+				method:'GET',
+				cors:'cors',
+				headers:{
+					'Content-Type':'application/json'
+				}
+
+			})
+			.then(response => response.json())
+			.then(data => data)
+
+			loadCategories(response.data)
+			
+		}
+		
+		
 		getCategories('http://localhost:3000/api/categories')
+	
+		formProduct.addEventListener('submit',function(e){
+			e.preventDefault()
+
+			for(let i = 0; i<e.target.length - 1 ;i++){
+				let name = e.target[i].name
+				let value = e.target[i].value
+
+				console.log(e.target[i].value)
+			}
+		} );
 	</script>
 
 </body>

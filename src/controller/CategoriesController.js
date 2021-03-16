@@ -2,17 +2,17 @@ const Categories = require('../model/Categories');
 
 module.exports = {
 	async index(request, response){
-		const page = parseInt(request.query.page);
+		//const page = parseInt(request.query.page);
 		
-		const limit = 20;
+		//const limit = 20;
 
 		const data =  await Categories.findAll({
-			limit: limit,
-			offset: page
+			//limit: limit,
+			//offset: page
 		});
 		
 		console.log(response)
-		return response.json({data, page, limit});
+		return response.json({data});
 	},
 
 	async create(request, response){

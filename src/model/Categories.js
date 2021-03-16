@@ -15,5 +15,5 @@ const Category = db.sequelize.define('categories',{
     	}
 	}
 });
-
+//Category.sync({force:true})
 module.exports = Category;
