@@ -1,36 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-	<title></title>
+
+	<meta charset="utf-8">
+
+	<title>Cadastro Categoria</title>
+	
 	<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;600&display=swap" rel="stylesheet"> 
-	<style type="text/css">
-		*{
-			bodx-sizing:boder-box;
-			padding: 0;
-			margin: 0;
-			font-family: 'Titillium Web', sans-serif;
-			font-size: 16px;
-		}
-		h1,h2,h3{
-			font-size: 35px;
-		}
-		ul{
-			display: flex;
-			justify-content: space-around;
-		}
-		li{
-			display:inline-flex;
-			list-style: none;
-		}
-		a{
-			color: blue;
-			text-decoration: none;
-		}
-		a:hover{
-			text-decoration: underline;
-		}
-	</style>
+	<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;400;500;600;700&display=swap" rel="stylesheet"> 
+	<link rel="stylesheet" type="text/css" href="http://localhost:3000/public/style">
+
+	<meta name="description" content="Painel de Controle">
+ 	<meta name="keywords" content="HTML, CSS, JavaScript">
+    <meta name="author" content="Quevem Costa da Cruz">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 <body>
 	<header>
@@ -45,74 +29,39 @@
 		</nav>
 	</header>
 
-	<section>
-		<h2>Nova Categoria</h2>
-		<form autocomplete="off" id='fom-category'   >
-			<label for="categoria">Categoria</label>
-			<input type="text" id="categoria" name="categoria" placeholder="Categoria">
-			<button type="submit" >Criar</button>
-		</form>
-	</section>
-	<section >
+	<main>
+		<section>
+			<h2>Nova Categoria</h2>
+			<form autocomplete="off" id='fom-category'   >
+				<div>
+					<label for="categoria">Categoria</label>
+					<input type="text" id="categoria" name="categoria" placeholder="Categoria">
+					<button type="submit" >Criar</button>
+				</div>
+			</form>
+		</section>
 
-		<div id="msg-response">
-			
-		</div>
+		<section >
 
-		<table>
-			<thead>
-				<tr>
-					<th>Cod</th>
-					<th>Nome</th>
-				</tr>
-			</thead>
-			<tbody id='renderResponse' >
+			<div id="msg-response">
 				
-			</tbody>
-		</table>
-		
-	</section>
+			</div>
 
+			<table>
+				<thead>
+					<tr>
+						<th>Cod</th>
+						<th>Nome</th>
+					</tr>
+				</thead>
+				<tbody id='renderResponse' >
+					
+				</tbody>
+			</table>
+			
+		</section>
+	</main>
 
-	<script type="text/javascript">
-
-		const form = document.getElementById('fom-category');
-
-		async function postData(url, data = {}){
-			const response = await fetch(url,{
-				method:'POST',
-				mode:'cors',
-				cache:'no-cache',
-				headers:{
-					'Content-Type':'application/json'
-				},
-				body:JSON.stringify(data)
-			});
-			return response.json();
-
-		}
-
-		function renderResponse(data){
-	
-			const msgResponse =  document.getElementById('msg-response')
-			msgResponse.innerHTML= `<span>Sucesso { Cod ${data.id} Categoria: ${data.name}}</span>`;
-
-		}
-
-
-		form.addEventListener('submit',function(e){
-			e.preventDefault()
-
-			postData('http://localhost:3000/api/category', {name:e.target[0].value})
-			.then(data => {
-				renderResponse(data);
-			});
-
-			e.target[0].value = ''
-
-		})
-	</script>
-
-	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script type="text/javascript" src="http://localhost:3000/public/nova/categoria" ></script>
 </body>
 </html>
